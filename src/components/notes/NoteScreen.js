@@ -8,7 +8,7 @@ export const NoteScreen = () => {
          <div className='notes__content'>
             <input
                type="text"
-               placeholder='Some aweone title'
+               placeholder='Some awesome title'
                className='notes__title-input'
                autoComplete='off'
             />
