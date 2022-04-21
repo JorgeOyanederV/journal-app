@@ -7,10 +7,14 @@ import { RegisterScreen } from '../components/auth/RegisterScreen'
 export const AuthRouter = () => {
   const match = useRouteMatch();
   return (
-    <Switch>
-      <Route exact path={`${match.path}/login`} component={LoginScreen} />
-      <Route exact path={`${match.path}/register`} component={RegisterScreen} />
-      <Redirect to='/auth/login' />
-    </Switch >
+    <div className='auth__main'>
+      <div className='auth__box-container'>
+        <Switch>
+          <Route exact path={`${match.path}/login`} component={LoginScreen} />
+          <Route exact path={`${match.path}/register`} component={RegisterScreen} />
+          <Redirect to='/auth/login' />
+        </Switch >
+      </div>
+    </div>
   )
 }
