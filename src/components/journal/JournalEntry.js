@@ -1,23 +1,38 @@
-import React from 'react'
+import React from 'react';
+import moment from 'moment';
+import { activeNote } from '../../actions/notes';
+import { useDispatch } from 'react-redux';
+export const JournalEntry = (entry) => {
+   const dispatch = useDispatch();
+   const { id, title, body, date, url } = entry;
+   const noteDate = moment(date);
+   const dia = noteDate.format("dddd");
+   const mes = noteDate.format("MMM Do YY");
 
-export const JournalEntry = ({ entry }) => {
+   const handleSetActive = () => {
+      dispatch(activeNote(id, entry))
+   }
    return (
-      <div className='journal__entry pointer'>
-         <div className='journal__entry-picture' style={{
-            backgroundSize: 'cover',
-            backgroundImage: 'url(https://www.cinepremiere.com.mx/wp-content/uploads/2021/07/digimon-adventure-900x491.jpg)'
-         }}></div>
+      <div className='journal__entry pointer' onClick={handleSetActive}>
+         {
+            url &&
+            <div className='journal__entry-picture' style={{
+               backgroundSize: 'cover',
+               backgroundImage: `url(${url})`
+            }}></div>
+         }
+
          <div className='journal__entry-body'>
             <p className='journal__entry-title'>
-               Un nuevo dia
+               {title}
             </p>
             <p className='journal__entry-content'>
-               Los Emblemas se refieren a dos cosas, a los símbolos de las.
+               {body}
             </p>
          </div>
          <div className='journal__entry-date-box'>
-            <span>Monday</span>
-            <h4>28</h4>
+            <span>{mes}</span>
+            <h4>{dia}</h4>
          </div>
       </div>
    )
