@@ -58,7 +58,7 @@ export const startSaveNote = (note) => {
       const noteToFirestore = { ...note };
       delete noteToFirestore.id;
       await db.doc(`${uid}/journal/notes/${note.id}`).update(noteToFirestore);
-      dispatch(refreshNotes(note.id, note))
+      dispatch(refreshNotes(note.id, noteToFirestore));
       Swal.fire('Saved', note.title, 'success');
    }
 }
@@ -88,8 +88,8 @@ export const startUploading = (file) => {
       });
       const fileUrl = await fileUpload(file);
       activeNote.url = fileUrl;
-      Swal.close();
       dispatch(startSaveNote(activeNote));
+      Swal.close();
    }
 }
 
