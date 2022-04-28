@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { activeNote } from '../../actions/notes'
+import { activeNote, startDeleting } from '../../actions/notes'
 import { useForm } from '../../hooks/useForm'
 import { NotesAppBar } from './NotesAppBar'
 
@@ -8,20 +8,30 @@ export const NoteScreen = () => {
    const dispatch = useDispatch();
    const { active: note } = useSelector(state => state.notes)
    const [formValues, handleInputChange, reset] = useForm(note);
-   const { body, title, url } = formValues;
+   const { body, title, url, id } = formValues;
 
    const activeId = useRef(note.id);
+   const activeUrl = useRef(note.Url);
    useEffect(() => {
       if (note.id !== activeId.current) {
          reset(note);
          activeId.current = note.id;
       }
+      if (note.url !== activeUrl.current) {
+         reset(note);
+         activeUrl.current = note.url;
+      }
+
    }, [note, reset])
 
    useEffect(() => {
       dispatch(activeNote(formValues.id, { ...formValues }))
    }, [formValues, dispatch])
 
+
+   const handleDelete = () => {
+      dispatch(startDeleting(id));
+   }
    return (
       <div className='notes__main-content'>
          <NotesAppBar />
@@ -45,13 +55,15 @@ export const NoteScreen = () => {
                (url)
                &&
                (<div className='notes__image'>
-                  <img src='https://assets.pokemon.com/static2/_ui/img/og-default-image.jpeg'
+                  <img src={url}
                      alt='pikachu' />
                </div>)
             }
-
-
          </div>
+
+         <button className='btn btn-danger' onClick={handleDelete}>
+            Delete
+         </button>
       </div>
    )
 }
