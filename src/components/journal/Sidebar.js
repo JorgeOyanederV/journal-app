@@ -28,8 +28,8 @@ export const Sidebar = () => {
                Logout
             </button>
          </div>
-         <div className='journal__new-entry' 
-         onClick={handleAddEntry}>
+         <div className='journal__new-entry'
+            onClick={handleAddEntry}>
             <i className='far fa-calendar-plus fa-5x'></i>
             <p className='mt-5'>
                New Entry
